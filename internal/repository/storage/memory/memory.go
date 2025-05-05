@@ -8,10 +8,6 @@ import (
 	"github.com/igor-benko/pow-tcp-server/internal/domain"
 )
 
-type RandProvider interface {
-	Intn(n int) int
-}
-
 type RandomFunc func(n int) int
 
 type Memory struct {
