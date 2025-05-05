@@ -1,0 +1,15 @@
+# build stage
+FROM golang:1.24-alpine AS build-env
+RUN apk --no-cache add git
+ARG CGO_ENABLED=0
+ARG TAG
+WORKDIR /app
+ADD . ./
+RUN go build -mod mod -o ./bin/client ./cmd/client
+
+# final stage
+FROM alpine
+WORKDIR /app/bin
+COPY --from=build-env /app/bin/client ./client
+RUN ls /app/bin
+ENTRYPOINT ["./client"]
